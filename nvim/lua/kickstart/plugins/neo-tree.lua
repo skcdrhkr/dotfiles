@@ -21,7 +21,7 @@ return {
         },
       },
     },
-    --   close_if_last_window = false,
+    close_if_last_window = true,
     event_handlers = {
 
       --      {
