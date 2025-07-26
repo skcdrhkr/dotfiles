@@ -93,11 +93,14 @@ vim.o.confirm = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Open Oil
+-- vim.keymap.set('n', '<leader>pf', ':Oil<CR>', { desc = 'Open netrw' })
+vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
+
+-- Save file quickly
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save file changes' })
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- nvim-tree toogle
--- vim.keymap.set('n', '<leader>e', ':Neotree<CR>', { noremap = true })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -205,6 +208,28 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+
+  -- Oil VIM tree
+
+  {
+    'stevearc/oil.nvim',
+    --- @module 'oil'
+    --- @type oil.SetupOpts
+    opts = {
+      columns = {
+        'icon',
+        'permissions',
+        'size',
+        --'mtime',
+      },
+      delete_to_trash = true,
+    },
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
   },
 
   -- neoconf to set global and local settings
@@ -385,6 +410,84 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+
+  -- Harpoon
+
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    config = function()
+      local harpoon = require 'harpoon'
+
+      -- REQUIRED
+      harpoon:setup {
+        global_settings = {
+          save_on_toogle = false,
+          save_on_change = true,
+          enter_on_sendcmd = false,
+          tmux_autoclose_windows = false,
+
+          excldued_filtypes = { 'harpoon' },
+
+          mark_branch = true,
+
+          tabline = false,
+          tabline_prefix = '    ',
+          tablein_suffix = '    ',
+        },
+      }
+      -- REQUIRED
+      vim.keymap.set('n', '<C-e>', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+      -- Using telescope
+
+      vim.keymap.set('n', '<leader>a', function()
+        harpoon:list():add()
+      end, { desc = 'Add file to Harpoon' })
+
+      vim.keymap.set('n', '<leader>l', function()
+        harpoon:list():remove()
+      end, { desc = 'Remove file from Harpoon' })
+
+      vim.keymap.set('n', '<C-j>', function()
+        harpoon:list():select(1)
+      end)
+      vim.keymap.set('n', '<C-k>', function()
+        harpoon:list():select(2)
+      end)
+      vim.keymap.set('n', '<C-l>', function()
+        harpoon:list():select(3)
+      end)
+      vim.keymap.set('n', '<C-;>', function()
+        harpoon:list():select(4)
+      end)
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      vim.keymap.set('n', '<leader>[', function()
+        harpoon:list():prev()
+      end, { desc = 'Move to next file in Harpoon buffer' })
+      vim.keymap.set('n', '<leader>]', function()
+        harpoon:list():next()
+      end, { desc = 'Move to next file in Harpoon buffer' })
+
+      harpoon:extend {
+        UI_CREATE = function(cx)
+          vim.keymap.set('n', '<C-v>', function()
+            harpoon.ui:select_menu_item { vsplit = true }
+          end, { buffer = cx.bufnr })
+
+          vim.keymap.set('n', '<C-x>', function()
+            harpoon.ui:select_menu_item { split = true }
+          end, { buffer = cx.bufnr })
+
+          vim.keymap.set('n', '<C-t>', function()
+            harpoon.ui:select_menu_item { tabedit = true }
+          end, { buffer = cx.bufnr })
+        end,
+      }
     end,
   },
 
@@ -837,6 +940,7 @@ require('lazy').setup({
       -- Enable theme
       require('onedark').load()
       vim.api.nvim_set_hl(0, 'CursorLine', { bold = true, bg = 'black' })
+      -- vim.cmd.colorscheme 'molokai'
     end,
   },
 
@@ -918,7 +1022,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
