@@ -99,6 +99,8 @@ vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
 
 -- Save file quickly
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save file changes' })
+vim.keymap.set({ 'i', 'c' }, 'jj', '<Esc>', { desc = 'Exit to normal mode' })
+vim.keymap.set({ 'v', 's' }, 'jj', '<Esc>', { desc = 'Exit to normal mode' })
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -452,18 +454,18 @@ require('lazy').setup({
         harpoon:list():remove()
       end, { desc = 'Remove file from Harpoon' })
 
-      vim.keymap.set('n', '<C-j>', function()
+      vim.keymap.set('n', '<leader>1', function()
         harpoon:list():select(1)
-      end)
-      vim.keymap.set('n', '<C-k>', function()
+      end, { desc = 'Go to first file in Harpoon' })
+      vim.keymap.set('n', '<leader>2', function()
         harpoon:list():select(2)
-      end)
-      vim.keymap.set('n', '<C-l>', function()
+      end, { desc = 'Go to second file in Harpoon' })
+      vim.keymap.set('n', '<leader>3', function()
         harpoon:list():select(3)
-      end)
-      vim.keymap.set('n', '<C-;>', function()
+      end, { desc = 'Go to third file in Harpoon' })
+      vim.keymap.set('n', '<leader>4', function()
         harpoon:list():select(4)
-      end)
+      end, { desc = 'Go to fourth file in Harpoon' })
 
       -- Toggle previous & next buffers stored within Harpoon list
       vim.keymap.set('n', '<leader>[', function()
@@ -704,7 +706,7 @@ require('lazy').setup({
         -- gopls = {},
         pyright = {},
 
-        -- jdtls = {},
+        -- jdtls = {}
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
