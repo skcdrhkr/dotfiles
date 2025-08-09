@@ -1,3 +1,12 @@
+" Setup Intellij VIM
+" Install below plugins:
+" 1. IdeaVim
+" 2. IdeaVim-EasyMotion
+" 3. AceJump
+" 4. IdeaVim-Quickscope
+" 5. Fuzzier
+" 6. Which-Key
+
 "" Base Settings
 "" ========================================================
 
@@ -31,8 +40,8 @@ set nerdtree
 let g:NERDTreeMapActivateNode='l'
 let g:NERDTreeMapJumpParent='h'
 
-" Easymotion settings: Install easymotion and AceJump #plugin
-"set easymotion
+" Easymotion and Quickscope settings
+set easymotion
 set notimeout
 set quickscope
 
@@ -45,7 +54,7 @@ let g:WhichKey_SortOrder = "by_key_prefix_first"
 
 let g:WhichKeyDesc_leader = "<leader> Leader key"
 
-let g:WhichKeyDesc_leader = "<leader>x Open file explorer"
+let g:WhichKeyDesc_file_explorer = "<leader>x Open file explorer"
 
 let g:WhichKeyDesc_easymotion = "<leader>j Jump with Easymotion"
 let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
@@ -62,7 +71,6 @@ let g:WhichKeyDesc_window_split_horizontally = "<leader>wh Split horizontally"
 let g:WhichKeyDesc_window_split_unsplit = "<leader>wu Unsplit"
 let g:WhichKeyDesc_window_split_move_editor = "<leader>wm Move editor to opposite tab group"
 
-
 let g:WhichKeyDesc_display = "<leader>d Display options"
 let g:WhichKeyDesc_zen_mode = "<leader>dz Toggle Zen mode"
 let g:WhichKeyDesc_df_mode = "<leader>dd Toggle Distraction-Free mode"
@@ -72,14 +80,12 @@ let g:WhichKeyDesc_action= "<leader>a Actions"
 let g:WhichKeyDesc_action_context_menu = "<leader>am Open context menu"
 let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
 
-" let g:WhichKeyDesc_file_quickLook = "<leader><leader> Recent files"
-
 let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
 let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
 let g:WhichKeyDesc_file_nav_goto_content = "<leader>fc Search for file content"
 let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
 let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
-let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fs Create new scratch file"
+let g:WhichKeyDesc_file_nav_create_scratch = "<leader>fs Create new scratch file"
 
 let g:WhichKeyDesc_close_tab = "<leader>q Close active tab"
 
@@ -99,18 +105,23 @@ let g:WhichKeyDesc_goto_usages = "<leader>gu Go to Usages"
 let g:WhichKeyDesc_goto_test = "<leader>gt Go to Test"
 let g:WhichKeyDesc_goto_back = "<leader>gb Go Back"
 let g:WhichKeyDesc_goto_forward = "<leader>gf Go Forward"
-
-let g:WhichKeyDesc_git = "<leader>g Git operations"
-" let g:WhichKeyDesc_git_commit = "<leader>gc Open Git commit dialog"
-let g:WhichKeyDesc_git_status = "<leader>gs Open Git status dialog"
-" let g:WhichKeyDesc_git_branches = "<leader>gb Open Git branches list"
+let g:WhichKeyDesc_goto_git_status = "<leader>gs Open Git status dialog"
 
 let g:WhichKeyDesc_errors = "<leader>e Error navigation"
-let g:WhichKeyDesc_errors_desc = "<leader>/ Show Error Description"
+let g:WhichKeyDesc_errors_show_desc = "<leader>ed Show Error Description"
 let g:WhichKeyDesc_errors_next = "<leader>en Go to next error in solution"
 let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 
 let g:WhichKeyDesc_generate = "<leader>i Generate"
+
+let g:WhichKeyDesc_terminal = "<leader>t Terminal"
+
+let g:WhichKeyDesc_project = "<leader>p Project tools"
+let g:WhichKeyDesc_project_fuzzy_files = "<leader>pf Fuzzy file search"
+
+let g:WhichKeyDesc_move = "<leader>m Move tools"
+let g:WhichKeyDesc_move_fuzzy = "<leader>mf Fuzzy file mover"
+let g:WhichKeyDesc_file_nav_fuzzy_grep = "<leader>fg Fuzzy grep search"
 
 "" Key mappings
 "" ========================================================
@@ -132,8 +143,8 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-j> <C-w>j
 
 " Jump between methods
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
 
 " Easy visual indentation
 vnoremap < <gv
@@ -143,8 +154,8 @@ vnoremap > >gv
 nnoremap qj @q
 
 " Popup navigation
-inoremap <C-j> <Action>(PopupMenu-selectNext)
-inoremap <C-k> <Action>(PopupMenu-selectPrev)
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
 
 " Running and Debugging
 nnoremap ,r :action ContextRun<CR>
@@ -152,6 +163,9 @@ nnoremap ,c :action RunClass<CR>
 nnoremap ,f :action ChooseRunConfiguration<CR>
 nnoremap ,t :action ActivateRunToolWindow<CR>
 nnoremap ,u :action Rerun<CR>
+
+" Remove search highlight
+nnoremap <Esc> :nohlsearch<CR>
 
 "" Leader commands
 "" ========================================================
@@ -169,11 +183,11 @@ map <leader>x :NERDTreeToggle<CR>
 map <leader>zc :action CollapseAllRegions<CR>
 map <leader>zo :action ExpandAllRegions<CR>
 
-" Window splits
-map <leader>wv <Action>(SplitVertically)
-map <leader>wh <Action>(SplitHorizontally)
-map <leader>wu <Action>(Unsplit)
-map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+" Window splits 
+map <leader>wv :action SplitVertically<CR>
+map <leader>wh :action SplitHorizontally<CR>
+map <leader>wu :action Unsplit<CR>
+map <leader>wm :action MoveEditorToOppositeTabGroup<CR>
 
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
@@ -188,7 +202,6 @@ map <leader>as <action>(SearchEverywhere)
 map <leader>ff <action>(GotoFile)
 map <leader>fr <action>(RecentFiles)
 map <leader>fc <action>(FindInPath)
-" map <leader><leader> <Action>(RecentFiles)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 
@@ -196,41 +209,38 @@ map <leader>fs <action>(NewScratchFile)
 map <leader>q <action>(CloseContent)
 
 " Refactoring
-map <leader>rn <Action>(RenameElement)
-map <leader>rm <Action>(ExtractMethod)
-map <leader>rv <Action>(IntroduceVariable)
-map <leader>rf <Action>(IntroduceField)
-map <leader>rs <Action>(ChangeSignature)
-map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>rn :action RenameElement<CR>
+map <leader>rm :action ExtractMethod<CR>
+map <leader>rv :action IntroduceVariable<CR>
+map <leader>rf :action IntroduceField<CR>
+map <leader>rs :action ChangeSignature<CR>
+map <leader>rr :action Refactorings.QuickListPopupAction<CR>
 
 " Go to code
-nmap <leader>gd <Action>(GotoDeclaration)
-nmap <leader>gy <Action>(GotoTypeDeclaration)
-nmap <leader>gi <Action>(GotoImplementation)
-nmap <leader>gu <Action>(ShowUsages)
-nmap <leader>gt <Action>(GotoTest)
-nmap <leader>gb <Action>(Back)
-nmap <leader>gf <Action>(Forward)
+nmap <leader>gd :action GotoDeclaration<CR>
+nmap <leader>gy :action GotoTypeDeclaration<CR>
+nmap <leader>gi :action GotoImplementation<CR>
+nmap <leader>gu :action ShowUsages<CR>
+nmap <leader>gt :action GotoTest<CR>
+nmap <leader>gb :action Back<CR>
+nmap <leader>gf :action Forward<CR>
 
 " Git windows
-" map <leader>gc <Action>(CheckinProject)
-map <leader>gs <Action>(ActivateVersionControlToolWindow)
-" map <leader>gb <Action>(Git.Branches)
+map <leader>Gs :action ActivateVersionControlToolWindow<CR>
 
 " Errors
-map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
-map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
-map <leader>e/ <Action>(ShowErrorDescription)
+map <leader>en :action ReSharperGotoNextErrorInSolution<CR>
+map <leader>ep :action ReSharperGotoPrevErrorInSolution<CR>
+map <leader>ed :action ShowErrorDescription<CR>
 
 " Generate
-nmap <leader>i <Action>(Generate) 
+nmap <leader>i :action Generate<CR>
 
 " Terminal
 nnoremap <c-t> :action Terminal.OpenInTerminal<CR>
 nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
 
-" Fuzzy Search,plugin: Fuzzier
+" Fuzzy Search, plugin: Fuzzier
 map <leader>pf <action>(com.mituuz.fuzzier.Fuzzier)
 map <leader>mf <action>(com.mituuz.fuzzier.FuzzyMover)
-" map <leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
 map <leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
