@@ -81,9 +81,9 @@ let g:WhichKeyDesc_action_context_menu = "<leader>am Open context menu"
 let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
 
 let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
-let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
-let g:WhichKeyDesc_file_nav_goto_content = "<leader>fc Search for file content"
-let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
+let g:WhichKeyDesc_file_nav_goto_file = "<C-p> Go to file"
+let g:WhichKeyDesc_file_nav_goto_content = "<leader>/ Search for file content"
+let g:WhichKeyDesc_file_nav_show_recent_files = "<C-e> Show recent files"
 let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
 let g:WhichKeyDesc_file_nav_create_scratch = "<leader>fs Create new scratch file"
 
@@ -97,15 +97,15 @@ let g:WhichKeyDesc_refactoring_field = "<leader>rf Introduce field"
 let g:WhichKeyDesc_refactoring_signature = "<leader>rs Change signature"
 let g:WhichKeyDesc_refactoring_all = "<leader>rr Open refactorings list"
 
-let g:WhichKeyDesc_goto = "<leader>g Go to X"
-let g:WhichKeyDesc_goto_declaration = "<leader>gd Go to Definition"
-let g:WhichKeyDesc_goto_type_declaration = "<leader>gy Go to Type Definition"
-let g:WhichKeyDesc_goto_implementation = "<leader>gi Go to Implementation"
-let g:WhichKeyDesc_goto_usages = "<leader>gu Go to Usages"
-let g:WhichKeyDesc_goto_test = "<leader>gt Go to Test"
-let g:WhichKeyDesc_goto_back = "<leader>gb Go Back"
-let g:WhichKeyDesc_goto_forward = "<leader>gf Go Forward"
-let g:WhichKeyDesc_goto_git_status = "<leader>gs Open Git status dialog"
+let g:WhichKeyDesc_goto = "g Go to X"
+let g:WhichKeyDesc_goto_declaration = "gd Go to Definition"
+let g:WhichKeyDesc_goto_type_declaration = "gy Go to Type Definition"
+let g:WhichKeyDesc_goto_implementation = "gi Go to Implementation"
+let g:WhichKeyDesc_goto_usages = "gu Go to Usages"
+let g:WhichKeyDesc_goto_test = "gt Go to Test"
+let g:WhichKeyDesc_goto_back = "<C-o> Go Back"
+let g:WhichKeyDesc_goto_forward = "gf Go Forward"
+let g:WhichKeyDesc_goto_git_status = "<leader>Gs Open Git status dialog"
 
 let g:WhichKeyDesc_errors = "<leader>e Error navigation"
 let g:WhichKeyDesc_errors_show_desc = "<leader>ed Show Error Description"
@@ -133,8 +133,8 @@ nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
 " Tab navigation
-nnoremap <A-n> :tabnext<CR>
-nnoremap <A-p> :tabprev<CR>
+nnoremap <A-]> :tabnext<CR>
+nnoremap <A-[> :tabprev<CR>
 
 " Pane navigation
 nnoremap <A-h> <C-w>h
@@ -199,9 +199,9 @@ map <leader>am <action>(ShowIntentionActions)
 map <leader>as <action>(SearchEverywhere)
 
 " File navigation
-map <leader>ff <action>(GotoFile)
-map <leader>fr <action>(RecentFiles)
-map <leader>fc <action>(FindInPath)
+map <C-p> <action>(GotoFile)
+map <C-e> <action>(RecentFiles)
+map <leader>/ <action>(FindInPath)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 
@@ -217,13 +217,13 @@ map <leader>rs :action ChangeSignature<CR>
 map <leader>rr :action Refactorings.QuickListPopupAction<CR>
 
 " Go to code
-nmap <leader>gd :action GotoDeclaration<CR>
-nmap <leader>gy :action GotoTypeDeclaration<CR>
-nmap <leader>gi :action GotoImplementation<CR>
-nmap <leader>gu :action ShowUsages<CR>
-nmap <leader>gt :action GotoTest<CR>
-nmap <leader>gb :action Back<CR>
-nmap <leader>gf :action Forward<CR>
+nmap gd :action GotoDeclaration<CR>
+nmap gy :action GotoTypeDeclaration<CR>
+nmap gi :action GotoImplementation<CR>
+nmap gu :action ShowUsages<CR>
+nmap gt :action GotoTest<CR>
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
 
 " Git windows
 map <leader>Gs :action ActivateVersionControlToolWindow<CR>

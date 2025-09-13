@@ -89,6 +89,10 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Key mappings for adding blank lines
+vim.keymap.set('n', '<S-CR>', 'O<Esc>', { desc = 'Insert blank line above cursor' })
+vim.keymap.set('n', '<CR>', 'o<Esc>', { desc = 'Insert blank line below cursor' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -210,6 +214,10 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+
+  { -- Sneak - quck horizontal jump
+    'justinmk/vim-sneak',
   },
 
   -- Oil VIM tree
@@ -927,24 +935,25 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      -- vim.cmd.colorscheme 'tokyonight-night'
-      -- vim.api.nvim_set_hl(0, 'CursorLine', { bold = true, bg = 'black' })
+       vim.cmd.colorscheme 'tokyonight-night'
+       vim.api.nvim_set_hl(0, 'CursorLine', { bold = true, bg = 'black' })
     end,
   },
 
-  {
-    'navarasu/onedark.nvim',
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require('onedark').setup {
-        style = 'deep',
-      }
-      -- Enable theme
-      require('onedark').load()
-      vim.api.nvim_set_hl(0, 'CursorLine', { bold = true, bg = 'black' })
-      -- vim.cmd.colorscheme 'molokai'
-    end,
-  },
+-- {
+ --    'navarasu/onedark.nvim',
+ --    priority = 1000, -- make sure to load this before all the other start plugins
+
+ --    config = function()
+ --      require('onedark').setup {
+ --        style = 'deep',
+ --      }
+ --      -- Enable theme
+ --      require('onedark').load()
+ --      vim.api.nvim_set_hl(0, 'CursorLine', { bold = true, bg = 'black' })
+ --      -- vim.cmd.colorscheme 'molokai'
+ --    end,
+ --  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
