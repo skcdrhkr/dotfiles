@@ -83,7 +83,7 @@ let g:WhichKeyDesc_action_search = "<leader>as Open command modal"
 let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
 let g:WhichKeyDesc_file_nav_goto_file = "<C-p> Go to file"
 let g:WhichKeyDesc_file_nav_goto_content = "<leader>/ Search for file content"
-let g:WhichKeyDesc_file_nav_show_recent_files = "<C-o> Show recent files"
+let g:WhichKeyDesc_file_nav_show_recent_files = "<C-e> Show recent files"
 let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
 let g:WhichKeyDesc_file_nav_create_scratch = "<leader>fs Create new scratch file"
 
@@ -103,7 +103,7 @@ let g:WhichKeyDesc_goto_type_declaration = "gy Go to Type Definition"
 let g:WhichKeyDesc_goto_implementation = "gi Go to Implementation"
 let g:WhichKeyDesc_goto_usages = "gu Go to Usages"
 let g:WhichKeyDesc_goto_test = "gt Go to Test"
-let g:WhichKeyDesc_goto_back = "gb Go Back"
+let g:WhichKeyDesc_goto_back = "<C-o> Go Back"
 let g:WhichKeyDesc_goto_forward = "gf Go Forward"
 let g:WhichKeyDesc_goto_git_status = "<leader>Gs Open Git status dialog"
 
@@ -133,8 +133,8 @@ nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
 " Tab navigation
-nnoremap <A-n> :tabnext<CR>
-nnoremap <A-p> :tabprev<CR>
+nnoremap <A-]> :tabnext<CR>
+nnoremap <A-[> :tabprev<CR>
 
 " Pane navigation
 nnoremap <A-h> <C-w>h
@@ -200,7 +200,7 @@ map <leader>as <action>(SearchEverywhere)
 
 " File navigation
 map <C-p> <action>(GotoFile)
-map <C-o> <action>(RecentFiles)
+map <C-e> <action>(RecentFiles)
 map <leader>/ <action>(FindInPath)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
@@ -222,8 +222,8 @@ nmap gy :action GotoTypeDeclaration<CR>
 nmap gi :action GotoImplementation<CR>
 nmap gu :action ShowUsages<CR>
 nmap gt :action GotoTest<CR>
-nmap gb :action Back<CR>
-nmap gf :action Forward<CR>
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
 
 " Git windows
 map <leader>Gs :action ActivateVersionControlToolWindow<CR>
